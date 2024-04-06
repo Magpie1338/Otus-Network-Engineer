@@ -107,3 +107,32 @@ Gi0/1       1,3-4,7-8
 s2#
 </pre>
 ## 4. Router-on-a-Stick
+### ping с PC-A на default gateway
+<pre>
+pc-a> ping 192.168.3.1
+
+84 bytes from 192.168.3.1 icmp_seq=1 ttl=255 time=3.532 ms
+84 bytes from 192.168.3.1 icmp_seq=2 ttl=255 time=2.444 ms
+84 bytes from 192.168.3.1 icmp_seq=3 ttl=255 time=3.102 ms
+84 bytes from 192.168.3.1 icmp_seq=4 ttl=255 time=2.434 ms
+84 bytes from 192.168.3.1 icmp_seq=5 ttl=255 time=3.372 ms
+</pre>
+### ping с PC-A на PC-B
+<pre>
+pc-a> ping 192.168.4.3
+
+84 bytes from 192.168.4.3 icmp_seq=1 ttl=63 time=17.527 ms
+84 bytes from 192.168.4.3 icmp_seq=2 ttl=63 time=6.097 ms
+84 bytes from 192.168.4.3 icmp_seq=3 ttl=63 time=5.294 ms
+84 bytes from 192.168.4.3 icmp_seq=4 ttl=63 time=4.739 ms
+</pre>
+### ping с PC-A на S2
+<pre>
+pc-a> ping 192.168.3.11
+
+84 bytes from 192.168.3.11 icmp_seq=1 ttl=255 time=2.327 ms
+84 bytes from 192.168.3.11 icmp_seq=2 ttl=255 time=1.483 ms
+84 bytes from 192.168.3.11 icmp_seq=3 ttl=255 time=3.170 ms
+84 bytes from 192.168.3.11 icmp_seq=4 ttl=255 time=1.860 ms
+84 bytes from 192.168.3.11 icmp_seq=5 ttl=255 time=2.098 ms
+</pre>
