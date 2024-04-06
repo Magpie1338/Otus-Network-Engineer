@@ -64,6 +64,7 @@ VLAN Name                             Status    Ports
 1004 fddinet-default                  act/unsup
 1005 trbrf-default                    act/unsup
 s2#
+</pre>
 
 ## 3. Trunk между коммутаторами
 
@@ -87,6 +88,7 @@ Port        Vlans in spanning tree forwarding state and not pruned
 Gi0/0       1,3-4,7-8
 Gi0/1       1,3-4,7-8
 s1#
+</pre>
 ### Коммутатор S2
 <pre>
 s2#show interfaces trunk
@@ -103,5 +105,5 @@ Gi0/1       1,3-4,7-8
 Port        Vlans in spanning tree forwarding state and not pruned
 Gi0/1       1,3-4,7-8
 s2#
-
+</pre>
 ## 4. Router-on-a-Stick
