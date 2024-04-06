@@ -1,0 +1,19 @@
+Addressing Table
+Device	Interface	IP Address	Subnet Mask	Default Gateway
+R1	G0/0/0.3	192.168.3.1	255.255.255.0	N/A
+R1	G0/0/0.4	192.168.4.1	255.255.255.0	N/A
+R1	G0/0/0.8	N/A	N/A	N/A
+S1	VLAN 3	192.168.3.11	255.255.255.0	192.168.3.1
+S2	VLAN 3	192.168.3.12	255.255.255.0	192.168.3.1
+PC-A	NIC	192.168.3.3	255.255.255.0	192.168.3.1
+PC-B	NIC	192.168.4.3	255.255.255.0	192.168.4.1
+VLAN Table
+VLAN	Name	Interface Assigned
+3	Management	S1: VLAN 3
+S2: VLAN 3
+S1: G1/3
+S1; G0/0
+4	Operations	S2: G1/3
+7	ParkingLot	S1: G0/2-3, G1/0-2, G0/1 
+S2: G0/2-3, G1/0-2, G0/1 
+8	Native	N/A
