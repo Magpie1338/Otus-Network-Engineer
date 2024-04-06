@@ -14,10 +14,6 @@
 3. Настроить trunk между коммутаторами
 4. Настроить маршрутизацию (Router-on-a-Stick)
 
-
-## Схема лабораторной работы 
-![](schema-lab001.jpg)
-
 ## Таблица ip адресов
 |Device|Interface|IP Address|Subnet Mask|Default Gateway|
 |------|---------|----------|-----------|--------------|
@@ -27,3 +23,84 @@
 |S2|VLAN3|192.168.3.12|255.255.255.0|192.168.3.1|
 |PC-A|NIC|192.168.3.3|255.255.255.0|192.168.3.1|
 |PC-B|NIC|192.168.4.3|255.255.255.0|192.168.4.1|
+
+## 1. Схема лабораторной работы 
+![](schema-lab001.jpg)
+
+## 2. Список VLAN
+### Коммутатор S1
+<pre>
+s1#sh vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active
+3    Management                       active    Gi1/3
+4    Operations                       active
+7    ParkingLot                       active    Gi0/2, Gi0/3, Gi1/0, Gi1/1
+                                                Gi1/2
+8    VLAN0008                         active
+1002 fddi-default                     act/unsup
+1003 trcrf-default                    act/unsup
+1004 fddinet-default                  act/unsup
+1005 trbrf-default                    act/unsup
+s1#
+
+### Коммутатор S2
+<pre>
+s2#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active
+3    Management                       active    Gi0/0
+4    Operations                       active    Gi1/3
+7    ParkingLot                       active    Gi0/2, Gi0/3, Gi1/0, Gi1/1
+                                                Gi1/2
+8    VLAN0008                         active
+1002 fddi-default                     act/unsup
+1003 trcrf-default                    act/unsup
+1004 fddinet-default                  act/unsup
+1005 trbrf-default                    act/unsup
+s2#
+
+## 3. Trunk между коммутаторами
+
+### Коммутатор S1
+<pre>
+s1#show interfaces trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       on               802.1q         trunking      8
+Gi0/1       on               802.1q         trunking      8
+
+Port        Vlans allowed on trunk
+Gi0/0       1-4094
+Gi0/1       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/0       1,3-4,7-8
+Gi0/1       1,3-4,7-8
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/0       1,3-4,7-8
+Gi0/1       1,3-4,7-8
+s1#
+### Коммутатор S2
+<pre>
+s2#show interfaces trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/1       on               802.1q         trunking      8
+
+Port        Vlans allowed on trunk
+Gi0/1       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/1       1,3-4,7-8
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/1       1,3-4,7-8
+s2#
+
+## 4. Router-on-a-Stick
