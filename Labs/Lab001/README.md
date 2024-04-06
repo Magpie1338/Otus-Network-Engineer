@@ -30,7 +30,7 @@
 ## 2. Список VLAN
 ### Коммутатор S1
 <pre>
-s1#sh vlan brief
+s1#show vlan brief
 
 VLAN Name                             Status    Ports
 ---- -------------------------------- --------- -------------------------------
@@ -45,6 +45,7 @@ VLAN Name                             Status    Ports
 1004 fddinet-default                  act/unsup
 1005 trbrf-default                    act/unsup
 s1#
+</pre>
 
 ### Коммутатор S2
 <pre>
