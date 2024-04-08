@@ -136,3 +136,12 @@ pc-a> ping 192.168.3.11
 84 bytes from 192.168.3.11 icmp_seq=4 ttl=255 time=1.860 ms
 84 bytes from 192.168.3.11 icmp_seq=5 ttl=255 time=2.098 ms
 </pre>
+### ping с PC-B на PC-B
+<pre>
+pc-b> ping 192.168.3.1
+
+84 bytes from 192.168.3.1 icmp_seq=1 ttl=255 time=6.037 ms
+84 bytes from 192.168.3.1 icmp_seq=2 ttl=255 time=6.770 ms
+84 bytes from 192.168.3.1 icmp_seq=3 ttl=255 time=6.685 ms
+84 bytes from 192.168.3.1 icmp_seq=4 ttl=255 time=4.568 ms
+</pre>
