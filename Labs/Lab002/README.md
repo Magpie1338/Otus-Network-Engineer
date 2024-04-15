@@ -18,13 +18,13 @@
 ![](schema-lab002.jpg)
 
 ## 2. Выбор корневого моста
-### Коммутатор S1
+### Коммутатор s1
 <pre>
 s1#show spanning-tree
 
 VLAN0001
-  Spanning tree enabled protocol rstp
-  `Root ID    Priority    32769`
+  Spanning tree enabled protocol rstp 
+   Root ID    Priority    32769  
              Address     5000.0001.0000
              This bridge is the root
              Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
@@ -43,7 +43,7 @@ Gi0/3               Desg FWD 4         128.4    Shr
 
 </pre>
 
-### Коммутатор S2
+### Коммутатор s2
 <pre>
 s2#show spanning-tree
 
@@ -69,7 +69,7 @@ Gi1/1               Desg FWD 4         128.6    Shr
    
 
 </pre>
-### Коммутатор S3
+### Коммутатор s3
 <pre>
 s3#show spanning-tree
 
@@ -93,6 +93,26 @@ Gi0/3               Altn BLK 4         128.4    Shr
 Gi1/0               Altn BLK 4         128.5    Shr
 Gi1/1               Altn BLK 4         128.6    Shr
 </pre>
+</b>Коммутатор s1 является корневым.</b>
+
+Коммутатор s1 MAC:5000.0001.0000
+Gi0/0 - Designated port
+Gi0/1 - Designated port
+Gi0/2 - Designated port
+Gi0/3 - Designated port
+
+Коммутатор s2 MAC:5000.0002.0000
+Gi0/0 - Root port
+Gi0/1 - Alternative port
+Gi1/0 - Designated port
+Gi1/1 - Designated port
+
+Коммутатор s3 MAC:5000.0003.0000
+Gi0/2 - Root port 
+Gi0/3 - Alternative port 
+Gi1/0 - Alternative port
+Gi1/1 - Alternative port
+
 
 ## 3. Trunk между коммутаторами
 
