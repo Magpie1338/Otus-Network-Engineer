@@ -24,7 +24,7 @@ s1#show spanning-tree
 
 VLAN0001
   Spanning tree enabled protocol rstp
-  Root ID    Priority    32769
+  `Root ID    Priority    32769`
              Address     5000.0001.0000
              This bridge is the root
              Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
