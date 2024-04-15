@@ -17,43 +17,81 @@
 ## 1. Схема лабораторной работы 
 ![](schema-lab002.jpg)
 
-## 2. Список VLAN
+## 2. Выбор корневого моста
 ### Коммутатор S1
 <pre>
-s1#show vlan brief
+s1#show spanning-tree
 
-VLAN Name                             Status    Ports
----- -------------------------------- --------- -------------------------------
-1    default                          active
-3    Management                       active    Gi1/3
-4    Operations                       active
-7    ParkingLot                       active    Gi0/2, Gi0/3, Gi1/0, Gi1/1
-                                                Gi1/2
-8    VLAN0008                         active
-1002 fddi-default                     act/unsup
-1003 trcrf-default                    act/unsup
-1004 fddinet-default                  act/unsup
-1005 trbrf-default                    act/unsup
-s1#
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0001.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    Shr
+Gi0/1               Desg FWD 4         128.2    Shr
+Gi0/2               Desg FWD 4         128.3    Shr
+Gi0/3               Desg FWD 4         128.4    Shr
+
 </pre>
 
 ### Коммутатор S2
 <pre>
-s2#show vlan brief
+s2#show spanning-tree
 
-VLAN Name                             Status    Ports
----- -------------------------------- --------- -------------------------------
-1    default                          active
-3    Management                       active    Gi0/0
-4    Operations                       active    Gi1/3
-7    ParkingLot                       active    Gi0/2, Gi0/3, Gi1/0, Gi1/1
-                                                Gi1/2
-8    VLAN0008                         active
-1002 fddi-default                     act/unsup
-1003 trcrf-default                    act/unsup
-1004 fddinet-default                  act/unsup
-1005 trbrf-default                    act/unsup
-s2#
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        1 (GigabitEthernet0/0)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0002.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Root FWD 4         128.1    Shr
+Gi0/1               Altn BLK 4         128.2    Shr
+Gi1/0               Desg FWD 4         128.5    Shr
+Gi1/1               Desg FWD 4         128.6    Shr
+   
+
+</pre>
+### Коммутатор S3
+<pre>
+s3#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        3 (GigabitEthernet0/2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0003.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/2               Root FWD 4         128.3    Shr
+Gi0/3               Altn BLK 4         128.4    Shr
+Gi1/0               Altn BLK 4         128.5    Shr
+Gi1/1               Altn BLK 4         128.6    Shr
 </pre>
 
 ## 3. Trunk между коммутаторами
