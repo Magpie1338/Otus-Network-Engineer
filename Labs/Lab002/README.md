@@ -23,6 +23,116 @@
 s1#show spanning-tree
 
 VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0001.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    Shr
+Gi0/2               Desg FWD 4         128.3    Shr
+</pre>
+
+### Коммутатор s2
+<pre>
+s2#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        1 (GigabitEthernet0/0)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0002.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Root FWD 4         128.1    Shr
+Gi1/0               Desg FWD 4         128.5    Shr
+</pre>
+### Коммутатор s3
+<pre>
+s3#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        3 (GigabitEthernet0/2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0003.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/2               Root FWD 4         128.3    Shr
+Gi1/0               Altn BLK 4         128.5    Shr
+</pre>
+</b>Коммутатор s1 является корневым.</b>
+
+Коммутатор s1 MAC:5000.0001.0000
+Gi0/0 - Designated port
+Gi0/2 - Designated port
+
+Коммутатор s2 MAC:5000.0002.0000
+Gi0/0 - Root port
+Gi1/0 - Designated port
+
+Коммутатор s3 MAC:5000.0003.0000
+Gi0/2 - Root port 
+Gi1/0 - Alternative port
+
+
+
+## 3. Изменение протокола Spanning-tree при изменении стоимости порта
+
+### На коммутаторе s3 (коммутатор с заблокированным портом) на порту Gi0/2 меняем стоимость
+<pre>
+s3#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        8
+             Port        5 (GigabitEthernet1/0)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0003.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/2               Altn BLK 30        128.3    Shr
+Gi1/0               Root FWD 4         128.5    Shr
+</pre>
+
+В результате интерфейс Gi1/0 стал Root портом, а интерфейс Gi0/2 стал альтернативным портом.
+
+## Выбор протоколом STP порта исходя из приорите портов
+### Коммутатор s1
+<pre>
+s1#show spanning-tree
+
+VLAN0001
   Spanning tree enabled protocol rstp 
    Root ID    Priority    32769  
              Address     5000.0001.0000
@@ -112,84 +222,3 @@ Gi0/2 - Root port
 Gi0/3 - Alternative port 
 Gi1/0 - Alternative port
 Gi1/1 - Alternative port
-
-
-## 3. Trunk между коммутаторами
-
-### Коммутатор S1
-<pre>
-s1#show interfaces trunk
-
-Port        Mode             Encapsulation  Status        Native vlan
-Gi0/0       on               802.1q         trunking      8
-Gi0/1       on               802.1q         trunking      8
-
-Port        Vlans allowed on trunk
-Gi0/0       1-4094
-Gi0/1       1-4094
-
-Port        Vlans allowed and active in management domain
-Gi0/0       1,3-4,7-8
-Gi0/1       1,3-4,7-8
-
-Port        Vlans in spanning tree forwarding state and not pruned
-Gi0/0       1,3-4,7-8
-Gi0/1       1,3-4,7-8
-s1#
-</pre>
-### Коммутатор S2
-<pre>
-s2#show interfaces trunk
-
-Port        Mode             Encapsulation  Status        Native vlan
-Gi0/1       on               802.1q         trunking      8
-
-Port        Vlans allowed on trunk
-Gi0/1       1-4094
-
-Port        Vlans allowed and active in management domain
-Gi0/1       1,3-4,7-8
-
-Port        Vlans in spanning tree forwarding state and not pruned
-Gi0/1       1,3-4,7-8
-s2#
-</pre>
-## 4. Router-on-a-Stick
-### ping с PC-A на default gateway
-<pre>
-pc-a> ping 192.168.3.1
-
-84 bytes from 192.168.3.1 icmp_seq=1 ttl=255 time=3.532 ms
-84 bytes from 192.168.3.1 icmp_seq=2 ttl=255 time=2.444 ms
-84 bytes from 192.168.3.1 icmp_seq=3 ttl=255 time=3.102 ms
-84 bytes from 192.168.3.1 icmp_seq=4 ttl=255 time=2.434 ms
-84 bytes from 192.168.3.1 icmp_seq=5 ttl=255 time=3.372 ms
-</pre>
-### ping с PC-A на PC-B
-<pre>
-pc-a> ping 192.168.4.3
-
-84 bytes from 192.168.4.3 icmp_seq=1 ttl=63 time=17.527 ms
-84 bytes from 192.168.4.3 icmp_seq=2 ttl=63 time=6.097 ms
-84 bytes from 192.168.4.3 icmp_seq=3 ttl=63 time=5.294 ms
-84 bytes from 192.168.4.3 icmp_seq=4 ttl=63 time=4.739 ms
-</pre>
-### ping с PC-A на S2
-<pre>
-pc-a> ping 192.168.3.11
-
-84 bytes from 192.168.3.11 icmp_seq=1 ttl=255 time=2.327 ms
-84 bytes from 192.168.3.11 icmp_seq=2 ttl=255 time=1.483 ms
-84 bytes from 192.168.3.11 icmp_seq=3 ttl=255 time=3.170 ms
-84 bytes from 192.168.3.11 icmp_seq=4 ttl=255 time=1.860 ms
-84 bytes from 192.168.3.11 icmp_seq=5 ttl=255 time=2.098 ms
-</pre>
-### ping с PC-B на PC-A
-<pre>
-pc-b> ping 192.168.3.1
-
-84 bytes from 192.168.3.1 icmp_seq=1 ttl=255 time=6.037 ms
-84 bytes from 192.168.3.1 icmp_seq=2 ttl=255 time=6.770 ms
-84 bytes from 192.168.3.1 icmp_seq=3 ttl=255 time=6.685 ms
-84 bytes from 192.168.3.1 icmp_seq=4 ttl=255 time=4.568 ms
-</pre>
