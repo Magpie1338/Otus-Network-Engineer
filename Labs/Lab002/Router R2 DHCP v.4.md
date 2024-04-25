@@ -1,6 +1,6 @@
 
 <pre>
-hostname R1
+hostname R2
 no ip domain-lookup
 banner motd
 *********************************
