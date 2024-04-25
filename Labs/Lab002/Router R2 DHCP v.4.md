@@ -10,7 +10,11 @@ Attention! Unauthorized access is prohibited!
 *********************************
 #
 interface G0/0
-ip add 10.0.0.2 255.255.255.252
+ip address 10.0.0.2 255.255.255.252
+no shutdown
 exit
+interface G0/1
+ip address 192.168.1.97 255.255.255.240
+no shutdown
 
 </pre>   
