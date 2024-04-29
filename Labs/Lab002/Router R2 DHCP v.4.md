@@ -16,5 +16,9 @@ exit
 interface G0/1
 ip address 192.168.1.97 255.255.255.240
 no shutdown
+exit
+ip route 192.168.1.0 255.255.255.192 10.0.0.1
+ip route 192.168.1.64 255.255.255.224 10.0.0.1
+
 
 </pre>   

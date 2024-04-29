@@ -28,6 +28,7 @@ encapsulation dot1Q 200
 ip address 192.168.1.65 255.255.255.224
 no shutdown
 exit
+ip route 192.168.1.96 255.255.255.240 10.0.0.2
 
 
 </pre>   
