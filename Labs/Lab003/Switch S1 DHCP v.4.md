@@ -26,8 +26,7 @@ exit
 interface vlan 200
 ip address 192.168.1.66 255.255.255.224
 exit
-interface vlan 1
-ip address 192.68.1.98 255.255.255.240
+
 
 
 </pre>
