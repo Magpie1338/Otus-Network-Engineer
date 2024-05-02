@@ -25,6 +25,7 @@ name Parking_Lot
 exit
 interface vlan 200
 ip address 192.168.1.66 255.255.255.224
+ip default-gateway 192.168.1.65
 exit
 
 
