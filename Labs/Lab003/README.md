@@ -36,129 +36,67 @@
 ##  Схема лабораторной работы 
 ![](schema-lab003-DHCPv4.jpg)
 
-## 1. Настройка лабороторного стенда.
+## 1. Настройка лабороторного стенда для DHCP v.4.
 Все команды настроек оборудования приведены ы файлах Router R1 DHCP v.4.md, Router R2 DHCP v.4.md, Switch S1 DHCP v.4.md и Switch S2 DHCP v.4.md
 
 
-## 3. Изменение протокола Spanning-tree при изменении стоимости порта
+## 2. Проверка настройки сервера DHCP v.4.
 
-### На коммутаторе s3 (коммутатор с заблокированным портом) на порту Gi0/2 меняем стоимость
+### На компьютере PC-A
 <pre>
-s3#show spanning-tree
+PC-A> show ip
 
-VLAN0001
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    32769
-             Address     5000.0001.0000
-             Cost        8
-             Port        5 (GigabitEthernet1/0)
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-             Address     5000.0003.0000
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  300 sec
-
-Interface           Role Sts Cost      Prio.Nbr Type
-------------------- ---- --- --------- -------- --------------------------------
-Gi0/2               Altn BLK 30        128.3    Shr
-Gi1/0               Root FWD 4         128.5    Shr
+NAME        : PC-A[1]
+IP/MASK     : 192.168.1.6/26
+GATEWAY     : 192.168.1.1
+DNS         :
+DHCP SERVER : 192.168.1.1
+DHCP LEASE  : 217551, 217800/108900/190575
+DOMAIN NAME : ccna-lab.com
+MAC         : 00:50:79:66:68:05
+LPORT       : 20000
+RHOST:PORT  : 127.0.0.1:30000
+MTU         : 1500
 </pre>
-
-В результате интерфейс Gi1/0 стал Root портом, а интерфейс Gi0/2 стал альтернативным портом.
-
-## Выбор протоколом STP порта исходя из приорите портов
-### Коммутатор s1
+### На маршрутизаторе R1
 <pre>
-s1#show spanning-tree
+R1#show ip dhcp pool
+Pool CLIENTS-POOL :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0
+ Total addresses                : 62
+ Leased addresses               : 1
+ Pending event                  : none
+ 1 subnet is currently in the pool :
+ Current index        IP address range                    Leased addresses
+ 192.168.1.7          192.168.1.1      - 192.168.1.62      1
+R1#show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/              Lease expiration        Type
+                    Hardware address/
+                    User name
+192.168.1.6         0100.5079.6668.05       May 05 2024 12:20 AM    Automatic
+R1#show ip dhcp server statistics
+Memory usage         32328
+Address pools        1
+Database agents      0
+Automatic bindings   1
+Manual bindings      0
+Expired bindings     0
+Malformed messages   0
+Secure arp entries   0
 
-VLAN0001
-  Spanning tree enabled protocol rstp 
-   Root ID    Priority    32769  
-             Address     5000.0001.0000
-             This bridge is the root
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+Message              Received
+BOOTREQUEST          0
+DHCPDISCOVER         3
+DHCPREQUEST          2
+DHCPDECLINE          0
+DHCPRELEASE          0
+DHCPINFORM           0
 
-  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-             Address     5000.0001.0000
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  300 sec
-
-Interface           Role Sts Cost      Prio.Nbr Type
-------------------- ---- --- --------- -------- --------------------------------
-Gi0/0               Desg FWD 4         128.1    Shr
-Gi0/1               Desg FWD 4         128.2    Shr
-Gi0/2               Desg FWD 4         128.3    Shr
-Gi0/3               Desg FWD 4         128.4    Shr
-
+Message              Sent
+BOOTREPLY            0
+DHCPOFFER            2
+DHCPACK              2
+DHCPNAK              0
 </pre>
-
-### Коммутатор s2
-<pre>
-s2#show spanning-tree
-
-VLAN0001
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    32769
-             Address     5000.0001.0000
-             Cost        4
-             Port        1 (GigabitEthernet0/0)
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-             Address     5000.0002.0000
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  300 sec
-
-Interface           Role Sts Cost      Prio.Nbr Type
-------------------- ---- --- --------- -------- --------------------------------
-Gi0/0               Root FWD 4         128.1    Shr
-Gi0/1               Altn BLK 4         128.2    Shr
-Gi1/0               Desg FWD 4         128.5    Shr
-Gi1/1               Desg FWD 4         128.6    Shr
-   
-
-</pre>
-### Коммутатор s3
-<pre>
-s3#show spanning-tree
-
-VLAN0001
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    32769
-             Address     5000.0001.0000
-             Cost        4
-             Port        3 (GigabitEthernet0/2)
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-             Address     5000.0003.0000
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  300 sec
-
-Interface           Role Sts Cost      Prio.Nbr Type
-------------------- ---- --- --------- -------- --------------------------------
-Gi0/2               Root FWD 4         128.3    Shr
-Gi0/3               Altn BLK 4         128.4    Shr
-Gi1/0               Altn BLK 4         128.5    Shr
-Gi1/1               Altn BLK 4         128.6    Shr
-</pre>
-</b>Коммутатор s1 является корневым.</b>
-
-Коммутатор s1 MAC:5000.0001.0000
-Gi0/0 - Designated port
-Gi0/1 - Designated port
-Gi0/2 - Designated port
-Gi0/3 - Designated port
-
-Коммутатор s2 MAC:5000.0002.0000
-Gi0/0 - Root port
-Gi0/1 - Alternative port
-Gi1/0 - Designated port
-Gi1/1 - Designated port
-
-Коммутатор s3 MAC:5000.0003.0000
-Gi0/2 - Root port 
-Gi0/3 - Alternative port 
-Gi1/0 - Alternative port
-Gi1/1 - Alternative port
