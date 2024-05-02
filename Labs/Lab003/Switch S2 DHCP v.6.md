@@ -19,10 +19,7 @@ no shutdown
 interface g0/3
 no shutdown
 exit
-interface vlan 1
-ip address 192.68.1.98 255.255.255.240
-ip default-gateway 192.168.1.97
-exit
+
 
 
 

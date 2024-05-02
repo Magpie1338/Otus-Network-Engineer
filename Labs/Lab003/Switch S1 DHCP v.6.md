@@ -14,4 +14,9 @@ exit
 interface range G1/0-3
 shutdown
 exit
+interface g1/2
+no shutdown
+interface g0/3
+no shutdown
+exit
 </pre>
