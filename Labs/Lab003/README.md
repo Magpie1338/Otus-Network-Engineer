@@ -68,6 +68,7 @@ PC-A> ping 192.168.1.1
 ### На маршрутизаторе R1
 <pre>
 R1#show ip dhcp pool
+
 Pool CLIENTS-POOL :
  Utilization mark (high/low)    : 100 / 0
  Subnet size (first/next)       : 0 / 0
@@ -77,15 +78,27 @@ Pool CLIENTS-POOL :
  1 subnet is currently in the pool :
  Current index        IP address range                    Leased addresses
  192.168.1.7          192.168.1.1      - 192.168.1.62      1
-R1#show ip dhcp binding
+
+Pool R2_Client_LAN :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0
+ Total addresses                : 14
+ Leased addresses               : 0
+ Pending event                  : none
+ 1 subnet is currently in the pool :
+ Current index        IP address range                    Leased addresses
+ 192.168.1.97         192.168.1.97     - 192.168.1.110     0
+
+R1# show ip dhcp binding
 Bindings from all pools not associated with VRF:
 IP address          Client-ID/              Lease expiration        Type
                     Hardware address/
                     User name
 192.168.1.6         0100.5079.6668.05       May 05 2024 12:20 AM    Automatic
+
 R1#show ip dhcp server statistics
-Memory usage         32328
-Address pools        1
+Memory usage         33633
+Address pools        2
 Database agents      0
 Automatic bindings   1
 Manual bindings      0
@@ -105,5 +118,91 @@ Message              Sent
 BOOTREPLY            0
 DHCPOFFER            2
 DHCPACK              2
+DHCPNAK              0
+</pre>
+## 3. Проверка настройки DHCP relay
+
+### На компьютере PC-B
+<pre>
+PC-B> show ip
+
+NAME        : PC-B[1]
+IP/MASK     : 192.168.1.102/28
+GATEWAY     : 192.168.1.97
+DNS         :
+DHCP SERVER : 10.0.0.1
+DHCP LEASE  : 217790, 217800/108900/190575
+DOMAIN NAME : ccna-lab.com
+MAC         : 00:50:79:66:68:04
+LPORT       : 20000
+RHOST:PORT  : 127.0.0.1:30000
+MTU         : 1500
+
+PC-B> ping 192.168.1.1
+
+84 bytes from 192.168.1.1 icmp_seq=1 ttl=254 time=3.667 ms
+84 bytes from 192.168.1.1 icmp_seq=2 ttl=254 time=3.171 ms
+84 bytes from 192.168.1.1 icmp_seq=3 ttl=254 time=3.140 ms
+84 bytes from 192.168.1.1 icmp_seq=4 ttl=254 time=2.694 ms
+84 bytes from 192.168.1.1 icmp_seq=5 ttl=254 time=2.981 ms
+</pre>
+### На маршрутизаторе R1
+<pre>
+R1#show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/              Lease expiration        Type
+                    Hardware address/
+                    User name
+192.168.1.6         0100.5079.6668.05       May 05 2024 12:20 AM    Automatic
+192.168.1.102       0100.5079.6668.04       May 05 2024 01:06 AM    Automatic
+
+R1#show ip dhcp server statistics
+Memory usage         42092
+Address pools        2
+Database agents      0
+Automatic bindings   2
+Manual bindings      0
+Expired bindings     0
+Malformed messages   0
+Secure arp entries   0
+
+Message              Received
+BOOTREQUEST          0
+DHCPDISCOVER         6
+DHCPREQUEST          4
+DHCPDECLINE          0
+DHCPRELEASE          0
+DHCPINFORM           0
+
+Message              Sent
+BOOTREPLY            0
+DHCPOFFER            4
+DHCPACK              4
+DHCPNAK              0
+</pre>
+### На маршрутизаторе R2
+<pre>
+R2#show ip dhcp server statistics
+Memory usage         22565
+Address pools        0
+Database agents      0
+Automatic bindings   0
+Manual bindings      0
+Expired bindings     0
+Malformed messages   0
+Secure arp entries   0
+
+Message              Received
+BOOTREQUEST          0
+DHCPDISCOVER         0
+DHCPREQUEST          0
+DHCPDECLINE          0
+DHCPRELEASE          0
+DHCPINFORM           0
+
+Message              Sent
+BOOTREPLY            0
+DHCPOFFER            0
+DHCPACK              0
 DHCPNAK              0
 </pre>
