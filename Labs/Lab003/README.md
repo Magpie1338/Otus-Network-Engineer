@@ -33,90 +33,11 @@
 |  999    |  Parking_Lot | S1: G0/0 - 2 |
 |  1000   |  Native      | N/A |
 
-## 1. Схема лабораторной работы 
+##  Схема лабораторной работы 
 ![](schema-lab003-DHCPv4.jpg)
 
-## 2. Выбор корневого моста
-### Коммутатор s1
-<pre>
-s1#show spanning-tree
-
-VLAN0001
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    32769
-             Address     5000.0001.0000
-             This bridge is the root
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-             Address     5000.0001.0000
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  300 sec
-
-Interface           Role Sts Cost      Prio.Nbr Type
-------------------- ---- --- --------- -------- --------------------------------
-Gi0/0               Desg FWD 4         128.1    Shr
-Gi0/2               Desg FWD 4         128.3    Shr
-</pre>
-
-### Коммутатор s2
-<pre>
-s2#show spanning-tree
-
-VLAN0001
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    32769
-             Address     5000.0001.0000
-             Cost        4
-             Port        1 (GigabitEthernet0/0)
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-             Address     5000.0002.0000
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  300 sec
-
-Interface           Role Sts Cost      Prio.Nbr Type
-------------------- ---- --- --------- -------- --------------------------------
-Gi0/0               Root FWD 4         128.1    Shr
-Gi1/0               Desg FWD 4         128.5    Shr
-</pre>
-### Коммутатор s3
-<pre>
-s3#show spanning-tree
-
-VLAN0001
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    32769
-             Address     5000.0001.0000
-             Cost        4
-             Port        3 (GigabitEthernet0/2)
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-             Address     5000.0003.0000
-             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  300 sec
-
-Interface           Role Sts Cost      Prio.Nbr Type
-------------------- ---- --- --------- -------- --------------------------------
-Gi0/2               Root FWD 4         128.3    Shr
-Gi1/0               Altn BLK 4         128.5    Shr
-</pre>
-</b>Коммутатор s1 является корневым.</b>
-
-Коммутатор s1 MAC:5000.0001.0000
-Gi0/0 - Designated port
-Gi0/2 - Designated port
-
-Коммутатор s2 MAC:5000.0002.0000
-Gi0/0 - Root port
-Gi1/0 - Designated port
-
-Коммутатор s3 MAC:5000.0003.0000
-Gi0/2 - Root port 
-Gi1/0 - Alternative port
-
+## 1. Настройка лабороторного стенда.
+Все команды настроек оборудования приведены ы файлах Router R1 DHCP v.4.md, Router R2 DHCP v.4.md, Switch S1 DHCP v.4.md и Switch S2 DHCP v.4.md
 
 
 ## 3. Изменение протокола Spanning-tree при изменении стоимости порта

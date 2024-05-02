@@ -29,6 +29,14 @@ ip address 192.168.1.65 255.255.255.224
 no shutdown
 exit
 ip route 192.168.1.96 255.255.255.240 10.0.0.2
+ip dhcp excluded-address 192.168.1.0 192.168.1.5
+ip dhcp pool CLIENTS-POOL
+network 192.168.1.0 255.255.255.192
+default-router 192.168.1.1
+domain-name ccna-lab.com
+lease 2 12 30
+
+
 
 
 </pre>   
