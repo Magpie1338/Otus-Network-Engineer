@@ -57,6 +57,13 @@ MAC         : 00:50:79:66:68:05
 LPORT       : 20000
 RHOST:PORT  : 127.0.0.1:30000
 MTU         : 1500
+PC-A> ping 192.168.1.1
+
+84 bytes from 192.168.1.1 icmp_seq=1 ttl=255 time=2.743 ms
+84 bytes from 192.168.1.1 icmp_seq=2 ttl=255 time=2.382 ms
+84 bytes from 192.168.1.1 icmp_seq=3 ttl=255 time=2.326 ms
+84 bytes from 192.168.1.1 icmp_seq=4 ttl=255 time=2.316 ms
+84 bytes from 192.168.1.1 icmp_seq=5 ttl=255 time=2.192 ms
 </pre>
 ### На маршрутизаторе R1
 <pre>
