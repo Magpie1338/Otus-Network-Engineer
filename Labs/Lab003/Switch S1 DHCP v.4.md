@@ -39,6 +39,18 @@ interface  G1/3
 switchport mode access
 switchport access vlan 999
 exit
+interface  G0/3
+no shutdown
+switchport mode access
+switchport access vlan 100
+exit
+interface  G1/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk native vlan 1000
+switchport trunk allowed vlan 100,200,1000
+exit
+
 
 
 </pre>
