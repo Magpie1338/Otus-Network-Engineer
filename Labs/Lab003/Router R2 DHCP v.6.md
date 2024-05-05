@@ -17,5 +17,17 @@ interface g0/1
 ipv6 address 2001:db8:acad:3::1/64
 no shutdown
 exit
-ipv6 route ::/0 g0/0
+ipv6 route ::/0 2001:db8:acad:2::1
+end
+copy running-config startup-config
 </pre>   
+Настройка DHCPv6 relay
+<pre>
+enable
+configure terminal
+interface g0/1
+ipv6 nd managed-config-flag
+ipv6 dhcp relay destination 2001:db8:acad:2::1 g0/0
+end
+copy running-config startup-config
+</pre>

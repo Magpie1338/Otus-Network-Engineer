@@ -234,8 +234,28 @@ DHCPNAK              0
 
 ## 1. Настройка лабороторного стенда для DHCP v.6.
 Все команды настроек оборудования приведены ы файлах Router R1 DHCP v.6.md, Router R2 DHCP v.6.md, Switch S1 DHCP v.6.md и Switch S2 DHCP v.6.md
-## 2. Проверка назначения ip адресов череез SLAAC c маршрутизатора R1
+## 2. Проверка назначения ip адресов через SLAAC c маршрутизатора R1
+<pre>
+PC-A> sh ipv6
 
+NAME              : PC-A[1]
+LINK-LOCAL SCOPE  : fe80::250:79ff:fe66:6805/64
+GLOBAL SCOPE      : 2001:db8:acad:1:2050:79ff:fe66:6805/64
+DNS               :
+ROUTER LINK-LAYER : 50:00:00:01:00:01
+MAC               : 00:50:79:66:68:05
+LPORT             : 20000
+RHOST:PORT        : 127.0.0.1:30000
+MTU:              : 1500
+</pre>
 ## 3. Настройка и проверка stateful DHCP на маршрутизаторе R1
 
 ## 4. Настройка и проверка DHCP relay на маршрутизаторе R2
+Получение IPv6 PC-B через SLAAC 
+<pre>
+PC-B> show ipv6 all
+
+NAME   IP/MASK                                 ROUTER LINK-LAYER  MTU
+PC-B   fe80::250:79ff:fe66:6804/64
+       2001:db8:acad:3:2050:79ff:fe66:6804/64  50:00:00:02:00:01  1500
+</pre>
