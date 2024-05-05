@@ -234,6 +234,14 @@ DHCPNAK              0
 
 ## 1. Настройка лабороторного стенда для DHCP v.6.
 Все команды настроек оборудования приведены ы файлах Router R1 DHCP v.6.md, Router R2 DHCP v.6.md, Switch S1 DHCP v.6.md и Switch S2 DHCP v.6.md
+### Проверка доступности порта G0/1 на маршрутизаторе R2 с маршрутизатора R1
+<pre>
+R1#ping 2001:db8:acad:3::1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2001:DB8:ACAD:3::1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+</pre>
 ## 2. Проверка назначения ip адресов через SLAAC c маршрутизатора R1
 <pre>
 PC-A> sh ipv6
