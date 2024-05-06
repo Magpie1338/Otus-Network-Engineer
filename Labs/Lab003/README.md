@@ -256,14 +256,11 @@ LPORT             : 20000
 RHOST:PORT        : 127.0.0.1:30000
 MTU:              : 1500
 </pre>
-## 3. Настройка и проверка stateful DHCP на маршрутизаторе R1
+## 3. Настройка и проверка stateless DHCP на маршрутизаторе R1
+
+![](pc-a-win-statefullDHCPv6.jpg)
 
 ## 4. Настройка и проверка DHCP relay на маршрутизаторе R2
 Получение IPv6 PC-B через SLAAC 
-<pre>
-PC-B> show ipv6 all
 
-NAME   IP/MASK                                 ROUTER LINK-LAYER  MTU
-PC-B   fe80::250:79ff:fe66:6804/64
-       2001:db8:acad:3:2050:79ff:fe66:6804/64  50:00:00:02:00:01  1500
-</pre>
+![](pc-b-win-statefullDHCPv6 relay.jpg)
