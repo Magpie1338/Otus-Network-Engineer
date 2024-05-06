@@ -16,9 +16,12 @@ shutdown
 exit
 interface g1/2
 no shutdown
+interface g0/2
+no shutdown
 interface g0/3
 no shutdown
-exit
+end
+copy running-config startup-config
 
 
 
