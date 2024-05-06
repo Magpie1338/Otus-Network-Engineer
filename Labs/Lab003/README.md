@@ -258,9 +258,9 @@ MTU:              : 1500
 </pre>
 ## 3. Настройка и проверка stateless DHCP на маршрутизаторе R1
 
-![](pc-a-win-statefullDHCPv6.jpg)
+![](pc-a-win-statelesslDHCPv6.jpg)
 
 ## 4. Настройка и проверка DHCP relay на маршрутизаторе R2
 Получение IPv6 PC-B через SLAAC 
 
-![](pc-b-win-statefullDHCPv6 relay.jpg)
+![](pc-b-win-statefullDHCPv6-relay.jpg)
