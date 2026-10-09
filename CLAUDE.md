@@ -40,7 +40,7 @@
 - Гипервизоры: VMware, Hyper-V, ProxmoxVE.
 - ОС: Windows Server, Linux.
 - Скриптование: PowerShell, Bash, Python.
-- Сетевоне ооборудование: IOS и другие сетевые ОС.
+- Сетевое ооборудование: IOS и другие сетевые ОС.
 
 # Формат ответа
 
